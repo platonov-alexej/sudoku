@@ -14,10 +14,19 @@ public:
 		for (int i = 1; i <= 9; i++)
 			v_set.insert(i);
 	}
-
+	
 	void setVal(int a) {
 		val = a;
 		v_set.clear();
+	}
+
+	void clear_v_set()
+	{
+		v_set.clear();
+	}
+
+	void add_v_set(int a) {
+		v_set.insert(a);
 	}
 
 	int getVal() {
@@ -42,6 +51,14 @@ public:
 
 	int lenSet() {
 		return v_set.size();
+	}
+
+	set<int> getSet() {
+		return v_set;
+	}
+
+	void setSet(set<int> a) {
+		v_set = a;
 	}
 
 	int getFirstFromSet() {
