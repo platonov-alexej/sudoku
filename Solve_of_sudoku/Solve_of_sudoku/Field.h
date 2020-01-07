@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include"Cells.h"
+#include<windows.h>
 class Field
 {
 private:
@@ -19,12 +20,7 @@ private:
 		}
 	}
 
-	bool arrangement(Cells* a) {
-		Cells tmpField[9][9];					
-		for (int i = 0; i < 9; i++)
-			for (int j = 0; j < 9; j++)
-				tmpField[j][i] = a[i  + j * 9];
-		
+	bool arrangement(Cells tmpField[9][9]) {
 		bool flag;
 		bool flag2 = true;
 		do {
@@ -50,36 +46,33 @@ private:
 					for (int j = 0; j < 9; j++)
 						if (tmpField[j][i].lenSet() > 1) {
 							while (tmpField[j][i].lenSet() > 0) {
-								Cells* tmp = new(Cells[81]);
+								Cells tmp[9][9];         //создание дубликата массива для пробной рекурсивной ветки 
 								for (int x = 0; x < 9; x++)
 									for (int y = 0; y < 9; y++)
-										tmp[x  + y * 9] = tmpField[y][x];
-								tmp[i + j * 9].setVal(tmp[i + j * 9].getFirstFromSet());
+										tmp[y][x] = tmpField[y][x];
+								tmp[j][i].setVal(tmp[j][i].getFirstFromSet());
 
-								if (arrangement(tmp))
+								if (arrangement(tmp))     //в случае успеха рекурсивной ветки (удалось полность заполнить поле) дубликатом заменяется оригинал
 								{
 									for (int i = 0; i < 9; i++)
 										for (int j = 0; j < 9; j++)
-											tmpField[j][i] = tmp[i + j * 9];
+											tmpField[j][i] = tmp[j][i];
 								}
 								else
 								{
-									tmpField[j][i].delFromSet(tmp[i + j * 9].getVal());
+									tmpField[j][i].delFromSet(tmp[j][i].getVal());    //в случае тупиковости ветки данный кандидат удаляется из сэта кандидатов
 								}
 							}
 						}
-			flag2 = true;
+			flag2 = true;						//проверка на полноту решения
 			for (int i = 0; i < 9; i++)
 				for (int j = 0; j < 9; j++)
 					if (tmpField[j][i].getVal() == 0)
 						flag2 = false;
-			if (flag2 == true) {
-				for (int i = 0; i < 9; i++)
-					for (int j = 0; j < 9; j++)
-						a[i + j * 9] = tmpField[j][i];
-				return true;
-			}
-		} while (flag2 == false);
+			
+			if (flag2 == true) return true;
+			
+		} while (flag2 == false);     //зациклить до тех пор пока не заполнятся все ячейки
 	}
 
 public:
@@ -87,12 +80,13 @@ public:
 
 	}
 
-
 	void fill(int x, int y, int a) {
 		gameField[x - 1][y - 1].setVal(a);
 	}
 
 	void show() {
+		/*SetConsoleCP(866);
+		SetConsoleOutputCP(866);*/
 		for (int i = 0; i < 9; i++) {
 			for (int j = 0; j < 9; j++)
 				if (gameField[j][i].getVal() > 0)
@@ -104,9 +98,8 @@ public:
 		cout << endl;
 	}
 
-
 	void solve() {
-		if (arrangement(*gameField)) {
+		if (arrangement(gameField)) {
 			show();
 		}
 	}
