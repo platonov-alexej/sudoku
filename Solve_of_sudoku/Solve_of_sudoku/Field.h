@@ -2,6 +2,8 @@
 #include<iostream>
 #include"Cells.h"
 #include<windows.h>
+
+
 class Field
 {
 private:
@@ -70,7 +72,7 @@ private:
 					if (tmpField[j][i].getVal() == 0)
 						flag2 = false;
 			
-			if (flag2 == true) return true;
+			if (flag2 == true) 	return true;
 			
 		} while (flag2 == false);     //зациклить до тех пор пока не заполн€тс€ все €чейки
 	}
@@ -80,28 +82,23 @@ public:
 
 	}
 
+	
 	void fill(int x, int y, int a) {
-		gameField[x - 1][y - 1].setVal(a);
+		gameField[x-1][y-1].setVal(a);
 	}
 
-	void show() {
-		/*SetConsoleCP(866);
-		SetConsoleOutputCP(866);*/
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++)
-				if (gameField[j][i].getVal() > 0)
-					cout << gameField[j][i].getVal();
-				else
-					cout << ' ';
-			cout << endl;
-		}
-		cout << endl;
+	void fill1(int x, int y, int a) {
+		gameField[x][y].setVal(a);
 	}
+
 
 	void solve() {
-		if (arrangement(gameField)) {
-			show();
-		}
+		if (arrangement(gameField)) 
+			cout << "Solution of this sudoku: " << endl;
+		else
+			cout << "This sudoku doesn't have any solution" << endl;
 	}
+
+	friend class Interface;
 };
 

@@ -153,11 +153,13 @@
   <ItemGroup>
     <ClCompile Include="Cells.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Solve_of_sudoku.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cells.h" />
     <ClInclude Include="Field.h" />
+    <ClInclude Include="Interface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
